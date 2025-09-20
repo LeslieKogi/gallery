@@ -8,41 +8,35 @@ const config = require('./_config');
 let index = require('./routes/index');
 let image = require('./routes/image');
 
-// connecting the database
-mongoose.connect(config.mongoURI.development, {
+// Choose MongoDB URI: prefer environment variable on Render
+const mongoURI = process.env.MONGO_URI || config.mongoURI.development;
+
+// Connect to MongoDB
+mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => console.log('Database connected successfully'))
-.catch(err => console.error('Database connection error:', err))
+.catch(err => console.error('Database connection error:', err));
 
-// test if the database has connected successfully
-let db = mongoose.connection;
-db.once('open', ()=>{
-    console.log('Database connected successfully')
-})
-
-// Initializing the app
+// Initialize the app
 const app = express();
-
 
 // View Engine
 app.set('view engine', 'ejs');
 
-// Set up the public folder;
+// Set up the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // body parser middleware
-app.use(express.json())
+app.use(express.json());
 
-
+// Routes
 app.use('/', index);
 app.use('/image', image);
 
-
-
- 
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT,() =>{
-    console.log(`Server is listening at http://localhost:${PORT}`)
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is listening at http://0.0.0.0:${PORT}`);
 });
