@@ -8,6 +8,9 @@ const config = require('./_config');
 let index = require('./routes/index');
 let image = require('./routes/image');
 
+// Initializing the app
+const app = express();
+
 // Choose MongoDB URI: prefer environment variable on Render
 const mongoURI = process.env.MONGO_URI || config.mongoURI.development;
 
