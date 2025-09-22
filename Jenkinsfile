@@ -25,7 +25,7 @@ pipeline{
                     
                     slackSend (
                         channel: '#leslie_ip1',   
-                        message: "Deploy Successful! \nBuild ID: ${env.BUILD_ID} \nView site: https://gallery-leslie.onrender.com \nJenkins job: ${env.BUILD_URL}"
+                        message: "Deploy Successful! \nBuild ID: ${env.BUILD_ID} \nView site: https://gallery-ed60.onrender.com/ \nJenkins job: ${env.BUILD_URL}"
                     )
                 }
             }
