@@ -18,8 +18,16 @@ pipeline{
            }
         }
          stage('Deploy to Render') {
-            steps {
-                sh 'curl -X POST https://api.render.com/deploy/srv-d37bffpr0fns739cjil0?key=BgsGqeJqG9E'
+             steps {
+                script {
+                    sh 'curl -X POST https://api.render.com/deploy/srv-d37bffpr0fns739cjil0?key=BgsGqeJqG9E'
+
+                    
+                    slackSend (
+                        channel: '#leslie_ip1',   
+                        message: "Deploy Successful! \nBuild ID: ${env.BUILD_ID} \nView site: https://gallery-leslie.onrender.com \nJenkins job: ${env.BUILD_URL}"
+                    )
+                }
             }
          }
             stage('Test') {
